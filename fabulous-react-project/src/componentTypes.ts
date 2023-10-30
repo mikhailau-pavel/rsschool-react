@@ -17,4 +17,11 @@ type TopBarProps = {
     changeValueFunction: (data: Planet[]) => void
 }
 
-export type {MainPageState, Planet, SearchResult, TopBarProps}
+type TopBarState = {
+    inputValue: string
+}
+type ResultsProps = {
+    arrayOfPlanets: Planet[]
+}
+
+export type {MainPageState, Planet, SearchResult, TopBarProps, TopBarState, ResultsProps}

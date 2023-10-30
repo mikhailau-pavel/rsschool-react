@@ -1,10 +1,10 @@
 import { Component } from 'react';
 import './TopBar.css'
-import { TopBarProps, SearchResult, Planet } from '../../componentTypes';
+import { TopBarProps, SearchResult, Planet, TopBarState } from '../../componentTypes';
 
 
 
-class TopBar extends Component<TopBarProps> {
+class TopBar extends Component<TopBarProps, TopBarState> {
     state = {
         inputValue: localStorage.getItem("request") || "",
       };
@@ -21,7 +21,7 @@ class TopBar extends Component<TopBarProps> {
       async getData() {
         const storedInput: string = localStorage.getItem("request") || "";
         const response: Response = await fetch(
-          `https://swapi.dev/api/planet/?search=${storedInput}`,
+          `https://swapi.dev/api/planets/?search=${storedInput}`,
         );
         const searchResponse: SearchResult = await response.json();
         const data: Planet[] = searchResponse.results;
@@ -34,7 +34,7 @@ class TopBar extends Component<TopBarProps> {
     render() {
         return(
             <div>
-                <input type="text" value={this.state.inputValue}/>
+                <input type="text" value={this.state.inputValue} onChange={this.changeInputHandle}/>
                 <button onClick={this.buttonClickHandle}>Click</button>
             </div>
         )

@@ -14,7 +14,7 @@ class MainPage extends Component {
     render() {
         return <div className='main-page-container'>
            <TopBar changeValueFunction={this.setNewState} />
-           <Results/>
+           <Results arrayOfPlanets={this.state.dataValue}/>
             </div>
     }
 }
