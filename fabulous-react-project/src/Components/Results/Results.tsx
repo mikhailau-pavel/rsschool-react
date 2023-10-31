@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import { Component } from 'react';
 import './Results.css'
 import { ResultsProps } from '../../componentTypes';
 
