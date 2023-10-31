@@ -1,27 +1,34 @@
 type MainPageState = {
-    dataValue: Planet[]
-}
+  dataValue: Planet[];
+};
 type Planet = {
-    name: string
-    diameter: string
-}
+  name: string;
+  diameter: string;
+};
 
 type SearchResult = {
-    count: number;
-    next: null;
-    previous: null;
-    results: Planet[];
-}
+  count: number;
+  next: null;
+  previous: null;
+  results: Planet[];
+};
 
 type TopBarProps = {
-    changeValueFunction: (data: Planet[]) => void
-}
+  changeValueFunction: (data: Planet[]) => void;
+};
 
 type TopBarState = {
-    inputValue: string
-}
+  inputValue: string;
+};
 type ResultsProps = {
-    arrayOfPlanets: Planet[]
-}
+  arrayOfPlanets: Planet[];
+};
 
-export type {MainPageState, Planet, SearchResult, TopBarProps, TopBarState, ResultsProps}
+export type {
+  MainPageState,
+  Planet,
+  SearchResult,
+  TopBarProps,
+  TopBarState,
+  ResultsProps,
+};
