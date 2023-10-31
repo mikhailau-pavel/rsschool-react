@@ -3,6 +3,7 @@ import './MainPage.css';
 import TopBar from '../TopBar/TopBar';
 import Results from '../Results/Results';
 import { Planet } from '../../componentTypes';
+import FakeErrorButton from '../FakeErrorButton/FakeErrorButton';
 
 class MainPage extends Component {
   state = { dataValue: [] };
@@ -15,6 +16,7 @@ class MainPage extends Component {
     return (
       <div className="main-page-container">
         <TopBar changeValueFunction={this.setNewState} />
+        <FakeErrorButton/>
         <Results arrayOfPlanets={this.state.dataValue} />
       </div>
     );

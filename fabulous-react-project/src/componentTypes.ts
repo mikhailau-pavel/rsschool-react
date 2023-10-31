@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 type MainPageState = {
   dataValue: Planet[];
 };
@@ -20,9 +22,15 @@ type TopBarProps = {
 type TopBarState = {
   inputValue: string;
 };
+
 type ResultsProps = {
   arrayOfPlanets: Planet[];
 };
+
+type ErrorBoundaryProps = {
+    fallback: ReactNode;
+    children: ReactNode
+}
 
 export type {
   MainPageState,
@@ -31,4 +39,5 @@ export type {
   TopBarProps,
   TopBarState,
   ResultsProps,
+  ErrorBoundaryProps
 };
