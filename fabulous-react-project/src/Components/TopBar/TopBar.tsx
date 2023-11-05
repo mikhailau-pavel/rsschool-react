@@ -21,7 +21,6 @@ const buttonClickHandle = () => {
 };
 
 const getData = useCallback(async (value: string) => {
-  //const storedInput: string = localStorage.getItem('request') || '';
   const response: Response = await fetch(
     `https://swapi.dev/api/planets/?search=${value}`
   );
