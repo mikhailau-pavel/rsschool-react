@@ -1,51 +1,50 @@
-import { Component } from 'react';
+import {FC, useCallback, useEffect, useState } from 'react';
 import './TopBar.css';
 import {
   TopBarProps,
   SearchResult,
   Planet,
-  TopBarState,
 } from '../../componentTypes';
 
-class TopBar extends Component<TopBarProps, TopBarState> {
-  state = {
-    inputValue: localStorage.getItem('request') || '',
-  };
+const TopBar: FC<TopBarProps> = (props) => {
+const {changeValueFunction} = {...props}
+const [inputValue, setInputValue] = useState<string>(localStorage.getItem('request') || '')
 
-  changeInputHandle = (event: React.FormEvent<HTMLInputElement>) => {
-    this.setState({ inputValue: event.currentTarget.value });
-  };
+const changeInputHandle = (event: React.FormEvent<HTMLInputElement>) => {
+  setInputValue(event.currentTarget.value)
+};
 
-  buttonClickHandle = () => {
-    localStorage.setItem('request', this.state.inputValue);
-    this.getData();
-  };
 
-  async getData() {
-    const storedInput: string = localStorage.getItem('request') || '';
-    const response: Response = await fetch(
-      `https://swapi.dev/api/planets/?search=${storedInput}`
-    );
-    const searchResponse: SearchResult = await response.json();
-    const data: Planet[] = searchResponse.results;
-    this.props.changeValueFunction(data);
-  }
+const buttonClickHandle = () => {
+  localStorage.setItem('request', inputValue);
+ getData(inputValue);
+};
 
-  componentDidMount(): void {
-    this.getData();
-  }
-  render() {
-    return (
-      <div>
-        <input
-          type="text"
-          value={this.state.inputValue}
-          onChange={this.changeInputHandle}
-        />
-        <button onClick={this.buttonClickHandle}>Click</button>
-      </div>
-    );
-  }
+const getData = useCallback(async (value: string) => {
+  //const storedInput: string = localStorage.getItem('request') || '';
+  const response: Response = await fetch(
+    `https://swapi.dev/api/planets/?search=${value}`
+  );
+  const searchResponse: SearchResult = await response.json();
+  const data: Planet[] = searchResponse.results;
+  changeValueFunction(data);
+}, [changeValueFunction])
+
+useEffect(()=> {
+  getData(inputValue)
+}, [getData, inputValue])
+
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={changeInputHandle}
+      />
+      <button onClick={buttonClickHandle}>Click</button>
+    </div>
+  );
 }
 
 export default TopBar;
