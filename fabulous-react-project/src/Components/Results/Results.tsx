@@ -1,10 +1,15 @@
 import { FC } from 'react';
 import './Results.css';
 import { ResultsProps } from '../../componentTypes';
+import { Link } from 'react-router-dom';
 
 
 const Results: FC<ResultsProps> =(props) => {
-const {arrayOfPlanets, nav = null, disable, onNextPageClick, onPrevPageClick} = {...props}
+const {arrayOfPlanets, nav = null, disable, onNextPageClick, onPrevPageClick, setPanelAppear, page} = {...props}
+
+const showDetails = () => {
+  setPanelAppear(false)
+}
   return (
     <div className="data-container">
     <div className='pagination'>
@@ -25,10 +30,17 @@ const {arrayOfPlanets, nav = null, disable, onNextPageClick, onPrevPageClick} = 
 
       {arrayOfPlanets.length
         ? arrayOfPlanets.map((el, index) => {
+          const id = el.url.split("/").at(-2);
             return (
               <div className="item__container" key={index}>
-                <h4>Planet: {el.name}</h4>
-                <p>Diameter: {el.diameter}</p>
+                <Link to={{ pathname: `/detail/${id}`, search: `page=${page}` }}>
+                <div onClick={showDetails}>
+                  <h4>Planet: {el.name}</h4>
+                  <p>Diameter: {el.diameter}</p>
+                </div>
+                </Link>
+
+                
               </div>
             );
           })

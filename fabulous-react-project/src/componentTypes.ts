@@ -7,6 +7,7 @@ type MainPageState = {
 type Planet = {
   name: string;
   diameter: string;
+  url: string
 };
 
 type SearchResult = {
@@ -40,6 +41,8 @@ type ResultsProps = {
     current: number;
     total: number;
   };
+  setPanelAppear: React.Dispatch<React.SetStateAction<boolean>>;
+  page: string;
 };
 
 type ErrorBoundaryProps = {
@@ -55,6 +58,10 @@ type MainPageProps = {
   setPanelAppear: React.Dispatch<React.SetStateAction<boolean>>
 
 }
+
+type PersonPageProps = {
+  setPanelAppear: React.Dispatch<React.SetStateAction<boolean>>;
+};
 export type {
   MainPageState,
   Planet,
@@ -64,5 +71,6 @@ export type {
   ResultsProps,
   ErrorBoundaryProps,
   PlanetSite,
-  MainPageProps
+  MainPageProps,
+  PersonPageProps
 };

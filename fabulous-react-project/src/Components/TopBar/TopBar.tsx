@@ -21,7 +21,7 @@ const buttonClickHandle = () => {
     setURLParams({ page: "1" });
     return;
   }
-  getData(inputValue);
+  getData(page);
  
 };
 
@@ -38,6 +38,7 @@ const getData = useCallback(async (page?: string) => {
 
 useEffect(()=> {
   getData(page)
+
 }, [getData, page])
 
 

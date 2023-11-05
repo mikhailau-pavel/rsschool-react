@@ -17,7 +17,7 @@ const App: FC = () => {
             }
           >
             <Route
-              path="/planet/:id"
+              path="/detail/:id"
               element={<PlanetSite setPanelAppear={setPanelAppear} />}
             />
           </Route>
