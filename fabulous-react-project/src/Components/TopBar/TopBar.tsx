@@ -7,7 +7,7 @@ import {
 } from '../../componentTypes';
 
 const TopBar: FC<TopBarProps> = (props) => {
-const {changeValueFunction} = {...props}
+const { changeValueFunction, /*changeLogStatus, */setItems, setURLParams, page } = {...props}
 const [inputValue, setInputValue] = useState<string>(localStorage.getItem('request') || '')
 
 const changeInputHandle = (event: React.FormEvent<HTMLInputElement>) => {
@@ -17,21 +17,28 @@ const changeInputHandle = (event: React.FormEvent<HTMLInputElement>) => {
 
 const buttonClickHandle = () => {
   localStorage.setItem('request', inputValue);
- getData(inputValue);
+  if (page !== "1") {
+    setURLParams({ page: "1" });
+    return;
+  }
+  getData(inputValue);
+ 
 };
 
-const getData = useCallback(async (value: string) => {
+const getData = useCallback(async (page?: string) => {
+  const pageNumber = page ? `&page=${page}` : "";
   const response: Response = await fetch(
-    `https://swapi.dev/api/planets/?search=${value}`
+    `https://swapi.dev/api/planets/?search=${inputValue}${pageNumber}`
   );
   const searchResponse: SearchResult = await response.json();
   const data: Planet[] = searchResponse.results;
   changeValueFunction(data);
-}, [changeValueFunction])
+  setItems(searchResponse.count);
+}, [changeValueFunction, setItems, inputValue])
 
 useEffect(()=> {
-  getData(inputValue)
-}, [getData, inputValue])
+  getData(page)
+}, [getData, page])
 
 
   return (
