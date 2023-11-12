@@ -1,17 +1,25 @@
-import {FC, useCallback, useEffect, useState } from 'react';
+import {FC, useCallback, useContext, useEffect } from 'react';
 import './TopBar.css';
 import {
   TopBarProps,
   SearchResult,
   Planet,
 } from '../../componentTypes';
+import { InputValueContext } from '../../context/contextInput';
 
 const TopBar: FC<TopBarProps> = (props) => {
-const { changeValueFunction, /*changeLogStatus, */setItems, setURLParams, page } = {...props}
-const [inputValue, setInputValue] = useState<string>(localStorage.getItem('request') || '')
+const { changeValueFunction, setItems, setURLParams, page } = {...props}
+
+const contextStorage = useContext(InputValueContext)
+
+const inputValue = contextStorage?.inputValue || ''
+
+const setInputValue = contextStorage?.setInputValue
 
 const changeInputHandle = (event: React.FormEvent<HTMLInputElement>) => {
-  setInputValue(event.currentTarget.value)
+  if (setInputValue) {
+    setInputValue(event.currentTarget.value)
+  }
 };
 
 
@@ -39,7 +47,7 @@ const getData = useCallback(async (page?: string) => {
 useEffect(()=> {
   getData(page)
 
-}, [getData, page])
+}, [page])
 
 
   return (

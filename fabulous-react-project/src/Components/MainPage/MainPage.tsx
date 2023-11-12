@@ -14,7 +14,7 @@ const getTotalPageCount = (rowCount: number): number =>
 const MainPage: FC<MainPageProps> = (props) => {
   const [dataValue, setDataValue] = useState<Planet[]>([])
   const [items, setItems] = useState<number>(0);
-  const [/*isLoading*/, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams({ page: "1" });
   const {isPanelExpand, setPanelAppear} = {...props}
   const page = Number(searchParams.get("page"));
@@ -30,6 +30,7 @@ const MainPage: FC<MainPageProps> = (props) => {
   };
 
   return (
+
     <div className="main-page-container">
       <div className={isPanelExpand ? 'main-section-wide' : 'main-section-compact'}>
       <TopBar changeValueFunction={setDataValue} changeLogStatus={changeLoadStatus} setItems={setItems} setURLParams={setSearchParams} page={page.toString()}/>
@@ -43,6 +44,7 @@ const MainPage: FC<MainPageProps> = (props) => {
       <div className={isPanelExpand ? 'side-section-close' : 'side-section-open'}>
           <Outlet/>
       </div>
+      
      
     </div>
   );
