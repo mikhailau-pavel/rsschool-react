@@ -6,13 +6,14 @@ import { Planet } from '../../componentTypes';
 import FakeErrorButton from '../FakeErrorButton/FakeErrorButton';
 import type { MainPageProps } from '../../componentTypes';
 import { Outlet, useSearchParams } from 'react-router-dom';
+import { PlanetContext } from '../../context/contextInput';
 
 const ROWS_PER_PAGE = 10;
 const getTotalPageCount = (rowCount: number): number =>
   Math.ceil(rowCount / ROWS_PER_PAGE);
 
 const MainPage: FC<MainPageProps> = (props) => {
-  const [dataValue, setDataValue] = useState<Planet[]>([])
+  const [planets, setPlanets] = useState<Planet[]>([])
   const [items, setItems] = useState<number>(0);
   const [, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams({ page: "1" });
@@ -32,10 +33,11 @@ const MainPage: FC<MainPageProps> = (props) => {
   return (
 
     <div className="main-page-container">
+      <PlanetContext.Provider value={{ planets, setPlanets}}>
       <div className={isPanelExpand ? 'main-section-wide' : 'main-section-compact'}>
-      <TopBar changeValueFunction={setDataValue} changeLogStatus={changeLoadStatus} setItems={setItems} setURLParams={setSearchParams} page={page.toString()}/>
+      <TopBar changeLogStatus={changeLoadStatus} setItems={setItems} setURLParams={setSearchParams} page={page.toString()}/>
       <FakeErrorButton/>
-      <Results arrayOfPlanets={dataValue} onNextPageClick={nextPageClick} onPrevPageClick={prevPageClick} disable={{
+      <Results onNextPageClick={nextPageClick} onPrevPageClick={prevPageClick} disable={{
           left: page === 1,
           right: page === getTotalPageCount(items)
         }}
@@ -44,9 +46,11 @@ const MainPage: FC<MainPageProps> = (props) => {
       <div className={isPanelExpand ? 'side-section-close' : 'side-section-open'}>
           <Outlet/>
       </div>
-      
-     
+
+      </PlanetContext.Provider>
     </div>
+      
+      
   );
 }
 

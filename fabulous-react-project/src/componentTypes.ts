@@ -18,7 +18,6 @@ type SearchResult = {
 };
 
 type TopBarProps = {
-  changeValueFunction: (data: Planet[]) => void;
   changeLogStatus: (status: boolean) => void;
   setItems: React.Dispatch<React.SetStateAction<number>>;
   setURLParams: SetURLSearchParams;
@@ -30,7 +29,6 @@ type TopBarState = {
 };
 
 type ResultsProps = {
-  arrayOfPlanets: Planet[];
   onNextPageClick: () => void;
   onPrevPageClick: () => void;
   disable: {

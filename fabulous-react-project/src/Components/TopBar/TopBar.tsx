@@ -5,13 +5,14 @@ import {
   SearchResult,
   Planet,
 } from '../../componentTypes';
-import { InputValueContext } from '../../context/contextInput';
+import { InputValueContext, PlanetContext } from '../../context/contextInput';
 
 const TopBar: FC<TopBarProps> = (props) => {
-const { changeValueFunction, setItems, setURLParams, page } = {...props}
+const { setItems, setURLParams, page } = {...props}
 
 const contextStorage = useContext(InputValueContext)
-
+const contextPlanets = useContext(PlanetContext)
+const changeValueFunction = contextPlanets?.setPlanets
 const inputValue = contextStorage?.inputValue || ''
 
 const setInputValue = contextStorage?.setInputValue
@@ -40,7 +41,9 @@ const getData = useCallback(async (page?: string) => {
   );
   const searchResponse: SearchResult = await response.json();
   const data: Planet[] = searchResponse.results;
-  changeValueFunction(data);
+  if (changeValueFunction) {
+    changeValueFunction(data);
+  }
   setItems(searchResponse.count);
 }, [changeValueFunction, setItems, inputValue])
 

@@ -7,8 +7,8 @@ export type InputValueContextType = {
   };
   
   export type PlanetContextType = {
-    people: Planet[];
-    setPeople: React.Dispatch<React.SetStateAction<Planet[]>>;
+    planets: Planet[];
+    setPlanets: React.Dispatch<React.SetStateAction<Planet[]>>;
   };
   export const InputValueContext = createContext<InputValueContextType | null>(
     null,

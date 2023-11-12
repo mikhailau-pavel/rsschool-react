@@ -1,11 +1,16 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import './Results.css';
 import { ResultsProps } from '../../componentTypes';
 import { Link } from 'react-router-dom';
+import { PlanetContext } from '../../context/contextInput';
 
 
 const Results: FC<ResultsProps> =(props) => {
-const {arrayOfPlanets, nav = null, disable, onNextPageClick, onPrevPageClick, setPanelAppear, page} = {...props}
+const { nav = null, disable, onNextPageClick, onPrevPageClick, setPanelAppear, page} = {...props}
+
+const contextPlanets = useContext(PlanetContext)
+const arrayOfPlanets = contextPlanets?.planets || []
+
 
 const showDetails = () => {
   setPanelAppear(false)
