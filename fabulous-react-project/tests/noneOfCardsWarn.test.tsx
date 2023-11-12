@@ -3,15 +3,16 @@ import {jest, expect, test, describe, beforeEach, afterEach} from '@jest/globals
 import ShallowRenderer from "react-test-renderer/shallow";
 
 import Results from "../src/Components/Results/Results";
+import { Mock, UnknownFunction } from "jest-mock";
 
 
 window.React = React;
-let realUseContext;
-let useContextMock;
+let realUseContext: <T>(context: React.Context<T>) => T;
+let useContextMock: Mock<UnknownFunction>
 
 beforeEach(() => {
   realUseContext = React.useContext;
-  useContextMock = React.useContext = jest.fn();
+  useContextMock  = jest.fn();
 });
 
 afterEach(() => {
