@@ -6,7 +6,7 @@ import { PlanetContext } from '../../context/contextInput';
 
 
 const Results: FC<ResultsProps> =(props) => {
-const { nav = null, disable, onNextPageClick, onPrevPageClick, setPanelAppear, page} = {...props}
+const {isLoad, nav = null, disable, onNextPageClick, onPrevPageClick, setPanelAppear, page} = {...props}
 
 const contextPlanets = useContext(PlanetContext)
 const arrayOfPlanets = contextPlanets?.planets || []
@@ -33,11 +33,11 @@ const showDetails = () => {
 
 
 
-      {arrayOfPlanets.length
+      {!isLoad
         ? arrayOfPlanets.map((el, index) => {
           const id = el.url.split("/").at(-2);
             return (
-              <div className="item__container" key={index}>
+              <div className="item__container" key={index} title='item'>
                 <Link to={{ pathname: `/detail/${id}`, search: `page=${page}` }}>
                 <div onClick={showDetails}>
                   <h4>Planet: {el.name}</h4>
@@ -51,6 +51,9 @@ const showDetails = () => {
           })
           
         : 'calculate coordinates...'}
+     {!arrayOfPlanets.length && !isLoad && (
+        <p>no planets</p>
+      )}
     </div>
   );
 }

@@ -29,6 +29,7 @@ type TopBarState = {
 };
 
 type ResultsProps = {
+  isLoad: boolean
   onNextPageClick: () => void;
   onPrevPageClick: () => void;
   disable: {

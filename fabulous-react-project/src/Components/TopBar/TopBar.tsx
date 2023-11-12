@@ -8,7 +8,7 @@ import {
 import { InputValueContext, PlanetContext } from '../../context/contextInput';
 
 const TopBar: FC<TopBarProps> = (props) => {
-const { setItems, setURLParams, page } = {...props}
+const {changeLogStatus, setItems, setURLParams, page } = {...props}
 
 const contextStorage = useContext(InputValueContext)
 const contextPlanets = useContext(PlanetContext)
@@ -35,6 +35,7 @@ const buttonClickHandle = () => {
 };
 
 const getData = useCallback(async (page?: string) => {
+  changeLogStatus(true)
   const pageNumber = page ? `&page=${page}` : "";
   const response: Response = await fetch(
     `https://swapi.dev/api/planets/?search=${inputValue}${pageNumber}`
@@ -45,6 +46,7 @@ const getData = useCallback(async (page?: string) => {
     changeValueFunction(data);
   }
   setItems(searchResponse.count);
+  changeLogStatus(false)
 }, [changeValueFunction, setItems, inputValue])
 
 useEffect(()=> {
