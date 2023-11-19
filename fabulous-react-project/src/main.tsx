@@ -9,7 +9,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary fallback={<p>Hyperdrive Failure. Tap F5 Chewie!</p>}>
       <BrowserRouter>
-      <App />
+        <App />
       </BrowserRouter>
     </ErrorBoundary>
   </React.StrictMode>

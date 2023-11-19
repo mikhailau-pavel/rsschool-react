@@ -1,70 +1,30 @@
-import {FC, useCallback, useContext, useEffect } from 'react';
-import './TopBar.css';
-import {
-  TopBarProps,
-  SearchResult,
-  Planet,
-} from '../../componentTypes';
-import { InputValueContext, PlanetContext } from '../../context/contextInput';
+import { FC, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { appSlice } from '../../store/reducers/AppReducer';
 
-const TopBar: FC<TopBarProps> = (props) => {
-const {changeLogStatus, setItems, setURLParams, page } = {...props}
+const NewTopBar: FC = () => {
+  const { query } = useAppSelector((state) => state.appReducer);
+  const { setQueryString } = appSlice.actions;
+  const [inputValue, setInputValue] = useState<string>(query);
+  const dispatch = useAppDispatch();
 
-const contextStorage = useContext(InputValueContext)
-const contextPlanets = useContext(PlanetContext)
-const changeValueFunction = contextPlanets?.setPlanets
-const inputValue = contextStorage?.inputValue || ''
+  const inputChangeHandler = (event: React.FormEvent<HTMLInputElement>) => {
+    setInputValue(event.currentTarget.value);
+  };
 
-const setInputValue = contextStorage?.setInputValue
-
-const changeInputHandle = (event: React.FormEvent<HTMLInputElement>) => {
-  if (setInputValue) {
-    setInputValue(event.currentTarget.value)
-  }
-};
-
-
-const buttonClickHandle = () => {
-  localStorage.setItem('request', inputValue);
-  if (page !== "1") {
-    setURLParams({ page: "1" });
-    return;
-  }
-  getData(page);
- 
-};
-
-const getData = useCallback(async (page?: string) => {
-  changeLogStatus(true)
-  const pageNumber = page ? `&page=${page}` : "";
-  const response: Response = await fetch(
-    `https://swapi.dev/api/planets/?search=${inputValue}${pageNumber}`
-  );
-  const searchResponse: SearchResult = await response.json();
-  const data: Planet[] = searchResponse.results;
-  if (changeValueFunction) {
-    changeValueFunction(data);
-  }
-  setItems(searchResponse.count);
-  changeLogStatus(false)
-}, [changeValueFunction, setItems, inputValue])
-
-useEffect(()=> {
-  getData(page)
-
-}, [page])
-
+  const buttonClickHandler = () => {
+    dispatch(setQueryString(inputValue));
+    localStorage.setItem('query-term', inputValue);
+  };
 
   return (
-    <div>
-      <input
-        type="text"
-        value={inputValue}
-        onChange={changeInputHandle}
-      />
-      <button onClick={buttonClickHandle}>Click</button>
-    </div>
+    <>
+      <div>
+        <input type="text" value={inputValue} onChange={inputChangeHandler} />
+        <button onClick={buttonClickHandler}>Search</button>
+      </div>
+    </>
   );
-}
+};
 
-export default TopBar;
+export default NewTopBar;

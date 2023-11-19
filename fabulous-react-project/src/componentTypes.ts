@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { SetURLSearchParams } from "react-router-dom";
+import { ReactNode } from 'react';
+import { SetURLSearchParams } from 'react-router-dom';
 
 type MainPageState = {
   dataValue: Planet[];
@@ -7,7 +7,7 @@ type MainPageState = {
 type Planet = {
   name: string;
   diameter: string;
-  url: string
+  url: string;
 };
 
 type SearchResult = {
@@ -29,7 +29,7 @@ type TopBarState = {
 };
 
 type ResultsProps = {
-  isLoad: boolean
+  isLoad: boolean;
   onNextPageClick: () => void;
   onPrevPageClick: () => void;
   disable: {
@@ -45,18 +45,17 @@ type ResultsProps = {
 };
 
 type ErrorBoundaryProps = {
-    fallback: ReactNode;
-    children: ReactNode
-}
+  fallback: ReactNode;
+  children: ReactNode;
+};
 type PlanetSite = {
-  setPanelAppear: React.Dispatch<React.SetStateAction<boolean>>
-}
+  setPanelAppear: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 type MainPageProps = {
-  isPanelExpand: boolean
-  setPanelAppear: React.Dispatch<React.SetStateAction<boolean>>
-
-}
+  isPanelExpand: boolean;
+  setPanelAppear: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 type PersonPageProps = {
   setPanelAppear: React.Dispatch<React.SetStateAction<boolean>>;
@@ -71,5 +70,5 @@ export type {
   ErrorBoundaryProps,
   PlanetSite,
   MainPageProps,
-  PersonPageProps
+  PersonPageProps,
 };

@@ -1,59 +1,26 @@
-import {FC, useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import MovieResult from '../MovieResult/MovieResult';
+import NewTopBar from '../TopBar/TopBar';
+import { useAppSelector } from '../../hooks/redux';
 import './MainPage.css';
-import TopBar from '../TopBar/TopBar';
-import Results from '../Results/Results';
-import { Planet } from '../../componentTypes';
-import FakeErrorButton from '../FakeErrorButton/FakeErrorButton';
-import type { MainPageProps } from '../../componentTypes';
-import { Outlet, useSearchParams } from 'react-router-dom';
-import { PlanetContext } from '../../context/contextInput';
-import TodoResult from '../TodoResult/TodoResult';
-
-const ROWS_PER_PAGE = 10;
-const getTotalPageCount = (rowCount: number): number =>
-  Math.ceil(rowCount / ROWS_PER_PAGE);
-
-const MainPage: FC<MainPageProps> = (props) => {
-  const [planets, setPlanets] = useState<Planet[]>([])
-  const [items, setItems] = useState<number>(0);
-  const [isLoad, setLoading] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams({ page: "1" });
-  const {isPanelExpand, setPanelAppear} = {...props}
-  const page = Number(searchParams.get("page"));
-  const changeLoadStatus = (status: boolean) => {
-    setLoading(status);
-  };
-
-  const prevPageClick = () => {
-    setSearchParams({ page: String(page - 1) });
-  };
-  const nextPageClick = () => {
-    setSearchParams({ page: String(page + 1) });
-  };
+const NewMainPage = () => {
+  const { isDetailOpen } = useAppSelector((state) => state.appReducer);
 
   return (
-
-    <div className="main-page-container">
-      <TodoResult/>
-      <PlanetContext.Provider value={{ planets, setPlanets}}>
-      <div className={isPanelExpand ? 'main-section-wide' : 'main-section-compact'}>
-      <TopBar changeLogStatus={changeLoadStatus} setItems={setItems} setURLParams={setSearchParams} page={page.toString()}/>
-      <FakeErrorButton/>
-      <Results isLoad={isLoad} onNextPageClick={nextPageClick} onPrevPageClick={prevPageClick} disable={{
-          left: page === 1,
-          right: page === getTotalPageCount(items)
-        }}
-        nav={{ current: page, total: getTotalPageCount(items) }} setPanelAppear={setPanelAppear} page={page.toString()}     />
+    <div className="main_container">
+      <div
+        className={!isDetailOpen ? `main-section-wide` : 'main-section-compact'}
+      >
+        <NewTopBar />
+        <MovieResult />
       </div>
-      <div className={isPanelExpand ? 'side-section-close' : 'side-section-open'}>
-          <Outlet/>
+      <div
+        className={!isDetailOpen ? 'side-section-close' : 'side-section-open'}
+      >
+        <Outlet />
       </div>
-
-      </PlanetContext.Provider>
     </div>
-      
-      
   );
-}
+};
 
-export default MainPage;
+export default NewMainPage;
