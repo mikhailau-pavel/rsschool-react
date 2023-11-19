@@ -1,19 +1,36 @@
 import {FC, useState} from 'react';
 import './App.css';
-import MainPage from './Components/MainPage/MainPage';
 import { Route, Routes } from 'react-router-dom';
-import PlanetSite from './Components/PlanetSite/PlanetSite';
 import Page404 from './Components/Page404/Page404';
-import { InputValueContext } from './context/contextInput'
+import { setupStore } from './store/store';
+import { Provider } from 'react-redux';
+import NewMainPage from './Components/MainPage/NewMainPage';
+import MovieDetail from './Components/MovieDetail/MovieDetail';
 
+
+const store = setupStore()
 const App: FC = () => {
-  const [isPanelExpand, setPanelAppear] = useState(false);
+  /*const [isPanelExpand, setPanelAppear] = useState(false);
   const [inputValue, setInputValue] = useState<string>(
     localStorage.getItem("request") || "",
-  );
+  );*/
 
-  return (
+
+  return (<div>
+    <Provider store={store}>
+      <Routes>
+        <Route path="/" element={<NewMainPage/>}>
+          <Route path="/detail/:id" element={<MovieDetail/>}/>
+        </Route>
+        <Route path="*" element={<Page404 />} />
+      </Routes>
+      
+    </Provider>
+  </div>)
+  /*return (
     <>
+    <Provider store={store}>
+      
     <InputValueContext.Provider value={{ inputValue, setInputValue }}>
       <Routes>
           <Route
@@ -32,7 +49,10 @@ const App: FC = () => {
      
     </InputValueContext.Provider>
     
+    </Provider>
+    
+    
     </>
-  );
+  );*/
 }
 export default App;

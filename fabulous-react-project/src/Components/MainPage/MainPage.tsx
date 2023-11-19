@@ -7,6 +7,7 @@ import FakeErrorButton from '../FakeErrorButton/FakeErrorButton';
 import type { MainPageProps } from '../../componentTypes';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import { PlanetContext } from '../../context/contextInput';
+import TodoResult from '../TodoResult/TodoResult';
 
 const ROWS_PER_PAGE = 10;
 const getTotalPageCount = (rowCount: number): number =>
@@ -33,6 +34,7 @@ const MainPage: FC<MainPageProps> = (props) => {
   return (
 
     <div className="main-page-container">
+      <TodoResult/>
       <PlanetContext.Provider value={{ planets, setPlanets}}>
       <div className={isPanelExpand ? 'main-section-wide' : 'main-section-compact'}>
       <TopBar changeLogStatus={changeLoadStatus} setItems={setItems} setURLParams={setSearchParams} page={page.toString()}/>
