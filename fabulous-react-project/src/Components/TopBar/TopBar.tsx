@@ -4,7 +4,7 @@ import { appSlice } from '../../store/reducers/AppReducer';
 
 const NewTopBar: FC = () => {
   const { query } = useAppSelector((state) => state.appReducer);
-  const { setQueryString } = appSlice.actions;
+  const { setQueryString, setPageNumber } = appSlice.actions;
   const [inputValue, setInputValue] = useState<string>(query);
   const dispatch = useAppDispatch();
 
@@ -14,6 +14,7 @@ const NewTopBar: FC = () => {
 
   const buttonClickHandler = () => {
     dispatch(setQueryString(inputValue));
+    dispatch(setPageNumber(1))
     localStorage.setItem('query-term', inputValue);
   };
 

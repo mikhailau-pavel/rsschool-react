@@ -26,7 +26,6 @@ const MovieResult: FC = () => {
     dispatch(changeLimit(Number(currentValueLimit)));
     dispatch(setPageNumber(1));
   };
-
   return (
     <div>
       <span>Choose limit: </span>
@@ -40,7 +39,8 @@ const MovieResult: FC = () => {
       </select>
       {!isLoading && <Pagination total={totalItems} />}
       {isLoading && <p>Searching...</p>}
-      {!isLoading &&
+      {!isLoading && !response?.data.movie_count && <p>Not results</p> }
+      {!isLoading && response?.data.movie_count &&
         response?.data.movies.map((movie) => {
           return (
             <div key={movie.id}>
