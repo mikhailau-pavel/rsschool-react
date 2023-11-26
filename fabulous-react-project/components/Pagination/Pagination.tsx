@@ -1,6 +1,6 @@
-import { FC } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { appSlice } from '../../store/reducers/AppReducer';
+import React, { FC } from 'react';
+import { useAppDispatch, useAppSelector } from '../../src/hooks/redux';
+import { appSlice } from '../../src/store/reducers/AppReducer';
 
 interface PaginationProps {
   total: number | undefined;

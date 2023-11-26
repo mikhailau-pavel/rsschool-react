@@ -19,7 +19,7 @@
     "plugins": [{ "name": "next" }]
 
   },
-  "include": ["./src", "./dist/types/**/*.ts","./next-env.d.ts"],
+  "include": ["./src", "./dist/types/**/*.ts","./next-env.d.ts", "components/MovieResult", "components/TopBar"],
   "exclude": ["./node_modules"],
   "references": []
 }

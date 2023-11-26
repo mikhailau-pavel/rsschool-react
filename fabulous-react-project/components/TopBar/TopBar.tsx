@@ -1,6 +1,6 @@
-import { FC, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { appSlice } from '../../store/reducers/AppReducer';
+import React, { FC, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../src/hooks/redux';
+import { appSlice } from '../../src/store/reducers/AppReducer';
 
 const NewTopBar: FC = () => {
   const { query } = useAppSelector((state) => state.appReducer);

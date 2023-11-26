@@ -10,7 +10,7 @@ interface AppState {
 
 const initialState: AppState = {
   isDetailOpen: false,
-  query: localStorage.getItem('query-term') || '',
+  query: '',
   limit: 5,
   page: 1,
   totalItems: null,

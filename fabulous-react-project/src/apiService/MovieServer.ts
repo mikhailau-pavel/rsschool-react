@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-
+import { HYDRATE } from 'next-redux-wrapper';
 export interface IMovie {
   url: string;
   id: number;
@@ -29,6 +29,11 @@ export interface FetchArgsType {
 const movieAPI = createApi({
   reducerPath: 'movieAPI',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://yts.mx' }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: (build) => ({
     fetchAllTMovies: build.query<ApiResponse, FetchArgsType>({
       query: ({ limit, page, search }: FetchArgsType) => ({
@@ -47,5 +52,14 @@ const movieAPI = createApi({
     }),
   }),
 });
+
+export const {
+  useFetchAllTMoviesQuery,
+  useFetchMovieByIdQuery,
+  util: { getRunningQueriesThunk },
+} = movieAPI;
+
+
+export const { fetchAllTMovies, fetchMovieById } = movieAPI.endpoints;
 
 export default movieAPI;

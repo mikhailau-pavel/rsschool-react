@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import MovieResult from '../MovieResult/MovieResult';
-import NewTopBar from '../TopBar/TopBar';
+import MovieResult from '../../../components/MovieResult/MovieResult';
+import NewTopBar from '../../../components/TopBar/TopBar';
 import { useAppSelector } from '../../hooks/redux';
 import './MainPage.css';
 const NewMainPage = () => {

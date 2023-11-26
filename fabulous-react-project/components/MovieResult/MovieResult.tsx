@@ -1,13 +1,13 @@
-import { ChangeEvent, FC, useState } from 'react';
-import movieAPI from '../../apiService/MovieServer';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import React, { ChangeEvent, FC, useState } from 'react';
+import { useFetchAllTMoviesQuery } from '../../src/apiService/MovieServer';
+import { useAppDispatch, useAppSelector } from '../../src/hooks/redux';
 import MovieCard from '../MovieCard/MovieCard';
-import { appSlice } from '../../store/reducers/AppReducer';
+import { appSlice } from '../../src/store/reducers/AppReducer';
 import Pagination from '../Pagination/Pagination';
 
 const MovieResult: FC = () => {
   const { query, limit, page } = useAppSelector((state) => state.appReducer);
-  const { data: response, isLoading } = movieAPI.useFetchAllTMoviesQuery({
+  const { data: response, isFetching } = useFetchAllTMoviesQuery({
     limit: limit,
     page: page,
     search: query,
@@ -37,10 +37,10 @@ const MovieResult: FC = () => {
         <option value="20">20</option>
         <option value="25">25</option>
       </select>
-      {!isLoading && <Pagination total={totalItems} />}
-      {isLoading && <p>Searching...</p>}
-      {!isLoading && !response?.data.movie_count && <p>Not results</p> }
-      {!isLoading && response?.data.movie_count &&
+      {!isFetching && <Pagination total={totalItems} />}
+      {isFetching && <p>Searching...</p>}
+      {!isFetching && !response?.data.movie_count && <p>Not results</p> }
+      {!isFetching && response?.data.movie_count &&
         response?.data.movies.map((movie) => {
           return (
             <div key={movie.id}>
